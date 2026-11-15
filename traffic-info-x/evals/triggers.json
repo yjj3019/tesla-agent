@@ -1,0 +1,14 @@
+{
+  "skill": "traffic-info-x",
+  "test_cases": [
+    {"input": "교통정보 요약", "should_trigger": true},
+    {"input": "교통정보 요약해줘", "should_trigger": true},
+    {"input": "경로 교통정보", "should_trigger": true},
+    {"input": "경로 교통정보 알려줘", "should_trigger": true},
+    {"input": "주변 교통정보", "should_trigger": true},
+    {"input": "주변 교통정보 해줘", "should_trigger": true},
+    {"input": "교통정보", "should_trigger": false},
+    {"input": "지금 교통 어때", "should_trigger": false},
+    {"input": "교통 상황", "should_trigger": false}
+  ]
+}
