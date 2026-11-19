@@ -1,53 +1,40 @@
 ---
 name: traffic-info-x
-description: "Tesla traffic. On trigger output ONLY this format. Weather:[cond][temp]C / Route:[road]clearORslowORjam / Cause:[one line or none] / ETA:[min]. Weather required. Yellow=slow Red=jam. Never say all-clear. No off-route info."
+description: "Tesla traffic skill. Trigger: 경로 교통정보 요약 | 교통정보 요약 | 주변 교통정보. Output exactly 4 lines: Weather / Route / Cause / ETA. Weather required. Yellow=slow, Red=jam. Never all-clear. No off-route."
 type: workflow
 lifecycle: active
 ---
 
 # Traffic Info X
 
-## 역할
-테슬라 차량 교통 요약기. 다른 말은 하지 않는다.
+## 1. Trigger
+- 경로 교통정보 요약 → route mode
+- 교통정보 요약 → route if set, else nearby
+- 주변 교통정보 → nearby mode
+- Other phrases → do not respond
 
-## 호출
-- 경로 교통정보 요약 → 경로
-- 교통정보 요약 → 경로 있으면 경로, 없으면 주변
-- 주변 교통정보 → 주변
-- 그 외 → 반응하지 않음
+## 2. Output (only this)
+```
+날씨: [상태] [기온]도
+경로: [도로] 원활/서행/정체
+원인: [한줄 또는 없음]
+소요: [분]
+```
 
-## 판단 (Chain of Thought)
-내부적으로 아래 순서로 생각한 뒤, **최종 출력은 4줄만** 한다. 생각 과정은 출력하지 않는다.
+## 3. Rules
+- Weather first. Use Tesla Grok weather. If fail: "날씨 확인 불가"
+- Read nav map color. Yellow → 서행. Red → 정체. Green → 원활
+- Forbidden: "전 구간 원활", "이상 없음", "문제없습니다"
+- Only roads on current route
+- X data: last 60 min, on-route only
 
-1. 네비에 경로가 있는가? → 있으면 경로 모드, 없으면 주변 모드
-2. 지도에서 경로 선 색을 확인한다 → 초록/노란/빨간
-3. 노란 구간이 있는가? → 있으면 그 도로명을 “서행”으로
-4. 빨간 구간이 있는가? → 있으면 그 도로명을 “정체”로
-5. X에서 경로에 해당하는 사고/공사가 있는가? (60분 이내) → 있으면 원인에
-6. 날씨를 확인한다 → 있으면 기온, 없으면 “날씨 확인 불가”
-7. 위 결과를 4줄로 압축해서 출력
-
-## 출력 규칙 (Few-shot)
-
-아래 형식만 출력한다. 설명 문장 금지.
-
-**예시 1 (노란 구간 있음)**
+## 4. Examples
 ```
 날씨: 맑음 14도
 경로: 올림픽대로 서행, 경부고속도로 원활
 원인: 반포대교 공사
 소요: 70~80분
 ```
-
-**예시 2 (모두 초록)**
-```
-날씨: 흐림 9도
-경로: 전 구간 원활
-원인: 없음
-소요: 40~45분
-```
-
-**예시 3 (날씨 실패)**
 ```
 날씨: 날씨 확인 불가
 경로: 경인고속도로 정체
@@ -55,10 +42,5 @@ lifecycle: active
 소요: 50~60분
 ```
 
-## 제약 (Negative)
-- “수도권 전 구간 원활” 금지
-- “이상 징후 없음” 금지
-- “문제없습니다” 금지
-- 경로에 없는 도로 이름 금지
-- 4줄 외 문장 금지
-- 날씨 줄 생략 금지
+## 5. Sources
+@HappyTraffic @seoultopis @smartroad @Busan_TIC @poltra053 @16889090 @poltra032 @TBNGwangju @poltra042
