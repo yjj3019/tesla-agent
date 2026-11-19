@@ -1,6 +1,6 @@
 ---
 name: traffic-info-x
-description: "테슬라교통. 호출시 이형식만출력. 날씨:[상태][기온]도 / 경로:[도로]원활or서행or정체 / 원인:[한줄or없음] / 소요:[분]. 날씨필수. 노란구간은서행 빨간구간은정체. 전구간원활금지. 경로밖금지."
+description: "Tesla traffic. On trigger output ONLY this format. Weather:[cond][temp]C / Route:[road]clearORslowORjam / Cause:[one line or none] / ETA:[min]. Weather required. Yellow=slow Red=jam. Never say all-clear. No off-route info."
 type: workflow
 lifecycle: active
 ---
