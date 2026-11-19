@@ -1,0 +1,13 @@
+{"input": "경로 교통정보 요약", "intent": "route", "expect_weather": true, "expect_road": true}
+{"input": "경로 교통 정보 요약해줘", "intent": "route", "expect_weather": true, "expect_road": true}
+{"input": "경로교통정보요약", "intent": "route", "expect_weather": true, "expect_road": true}
+{"input": "교통정보 요약", "intent": "route_or_nearby", "expect_weather": true, "expect_road": true}
+{"input": "교통 요약 좀", "intent": "route_or_nearby", "expect_weather": true, "expect_road": true}
+{"input": "주변 교통정보", "intent": "nearby", "expect_weather": true, "expect_road": true}
+{"input": "주변 교통 알려줘", "intent": "nearby", "expect_weather": true, "expect_road": true}
+{"input": "근처 교통정보", "intent": "nearby", "expect_weather": true, "expect_road": true}
+{"input": "날씨 어때", "intent": "none", "expect_weather": false, "expect_road": false}
+{"input": "음악 틀어", "intent": "none", "expect_weather": false, "expect_road": false}
+{"input": "집까지 얼마나 걸려", "intent": "none", "expect_weather": false, "expect_road": false}
+{"input": "히터 켜", "intent": "none", "expect_weather": false, "expect_road": false}
+{"input": "지금 몇 시야", "intent": "none", "expect_weather": false, "expect_road": false}
