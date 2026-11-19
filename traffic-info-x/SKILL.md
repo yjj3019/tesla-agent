@@ -7,22 +7,25 @@ lifecycle: active
 
 # Traffic Info X
 
-## 1. Trigger (정교 매칭)
-공백 제거 후 아래 **패턴**과 대조한다.
+## 1. Trigger (Regex)
+공백 제거 후 컴파일된 패턴으로 매칭.
 
-| 패턴 | 의미 | 예시 |
-|------|------|------|
-| `경로` + `교통` | 경로 모드 | 경로 교통정보, 경로교통 요약 |
-| `교통정보` + `요약` | 경로 또는 주변 | 교통정보 요약 |
-| `주변` 또는 `근처` + `교통` | 주변 모드 | 주변 교통정보 |
+```python
+import re
+_ROUTE = re.compile(r"경로.*교통|교통.*경로")
+_SUMMARY = re.compile(r"교통정보.*요약|요약.*교통정보")
+_NEARBY = re.compile(r"(주변|근처).*교통|교통.*(주변|근처)")
 
+def match(text):
+    t = text.replace(" ", "")
+    if _ROUTE.search(t): return "route"
+    if _SUMMARY.search(t): return "route_or_nearby"
+    if _NEARBY.search(t): return "nearby"
+    return None
 ```
-normalize(text) = remove spaces
-if ("경로" in t and "교통" in t) → route
-elif ("교통정보" in t and "요약" in t) → route_or_nearby
-elif (("주변" in t or "근처" in t) and "교통" in t) → nearby
-else → ignore
-```
+
+- 패턴은 모듈 로드 시 1회 컴파일
+- `search`는 단락회로 (첫 매칭에서 종료)
 
 ## 2. Output (음성용, 2~3문장)
 ```
