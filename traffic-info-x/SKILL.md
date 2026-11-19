@@ -7,11 +7,18 @@ lifecycle: active
 
 # Traffic Info X
 
-## 1. Trigger
-- 경로 교통정보 요약 → route mode
-- 교통정보 요약 → route if set, else nearby
-- 주변 교통정보 → nearby mode
-- Other phrases → do not respond
+## 1. Trigger (음성 인식 허용)
+아래와 **비슷하게** 들려도 이 스킬을 사용한다.
+
+| 정확 | 허용 변형 |
+|------|-----------|
+| 경로 교통정보 요약 | 경로 교통 정보 요약, 경로교통정보요약, 경로 교통정보 |
+| 교통정보 요약 | 교통 정보 요약, 교통정보요약, 교통 요약 |
+| 주변 교통정보 | 주변 교통 정보, 주변교통정보, 근처 교통 |
+
+- “해줘”, “알려줘”, “좀” 은 있어도 된다.
+- 핵심 명사(경로/교통/주변/요약)가 있으면 발동.
+- 완전히 다른 문장(“날씨 어때”, “음악 틀어”)은 무시.
 
 ## 2. Output (음성용, 2~3문장)
 설명 없이 아래만 말한다.
@@ -29,31 +36,10 @@ lifecycle: active
 예상 70분에서 80분 걸립니다.
 ```
 
-색상 확인 불가 시:
-```
-날씨는 맑고 14도입니다.
-네비 색상은 확인되지 않았습니다.
-X 기준 특이사항 없습니다.
-```
-
 ## 3. Rules
-- Weather first. Use Tesla Grok weather. If fail: "날씨 확인 불가"
-- Read nav map color. Yellow → 서행. Red → 정체. Green → 원활
-- Forbidden: "전 구간 원활", "이상 없음", "문제없습니다"
-- Only roads on current route
-- X data: last 60 min, on-route only
+- Weather first. Yellow → 서행. Red → 정체.
+- Forbidden: "전 구간 원활"
+- Only on-route roads. X data last 60 min.
 
-## 4. Examples
-```
-날씨는 맑고 14도입니다.
-올림픽대로가 서행입니다.
-예상 70분에서 80분 걸립니다.
-```
-```
-날씨는 확인되지 않았습니다.
-경인고속도로가 정체입니다.
-예상 50분에서 60분 걸립니다.
-```
-
-## 5. Sources
+## 4. Sources
 @HappyTraffic @seoultopis @smartroad @Busan_TIC @poltra053 @16889090 @poltra032 @TBNGwangju @poltra042
